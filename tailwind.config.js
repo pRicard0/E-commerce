@@ -3,6 +3,11 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontSize: {
+        'header-title': '2rem',
+        'h1': '1.75rem',
+        'h2': '0.7775rem'
+      },
       colors: {
         neutral: {
           'Very-dark-blue': 'hsl(220, 13%, 13%)',
@@ -14,7 +19,8 @@ export default {
         },
         primary: {
           'Orange': 'hsl(26, 100%, 55%)',
-          'Pale orange': 'hsl(25, 100%, 94%)'
+          'Pale orange': 'hsl(25, 100%, 94%)',
+          'modal': 'hsl(0, 0%, 50%)'
         }
       },
       fontFamily: {

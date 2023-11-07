@@ -1,9 +1,15 @@
+import Header from "./components/Header"
+import Product from "./components/Product"
+import TextArea from "./components/TextArea"
+
 function App() {
 
   return (
-    <>
-     <h1 className="text-base">oi</h1> 
-    </>
+    <div className="w-full min-h-screen">
+      <Header></Header>
+      <Product></Product>
+      <TextArea></TextArea>
+    </div>
   )
 }
 
