@@ -19,7 +19,7 @@ export default {
         },
         primary: {
           'Orange': 'hsl(26, 100%, 55%)',
-          'Pale orange': 'hsl(25, 100%, 94%)',
+          'Pale-orange': 'hsl(25, 100%, 94%)',
           'modal': 'hsl(0, 0%, 50%)'
         }
       },
