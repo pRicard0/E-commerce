@@ -15,19 +15,53 @@ export default function Header() {
         initial={{y: '-4.25rem'}}
         animate={{y: 0}}
         transition={{type:'just', duration: 0.6, delay: 0.1}}
-        className='flex justify-between p-6 py-5 pb-6'>
+        className='flex justify-between p-6 py-5 pb-6 lg:border-b-2 lg:border-gray-200 lg:pb-10 lg:px-0 lg:pt-4'>
             <div className='flex items-end space-x-4 pb-1'>
-                <button type='button' aria-label='Press here to open the menu' onClick={() => setOpenMenu(true)}>
+                <button 
+                type='button' 
+                aria-label='Press here to open the menu' 
+                onClick={() => setOpenMenu(true)}
+                className='lg:hidden'>
                     <img src={menuIcon} alt="Menu"/>
                 </button>
                 <img src={logo} alt=""/>
+
+                <div className='hidden lg:flex lg:space-x-6 lg:pl-5 font-Kumbh text-neutral-Dark-grayish-blue'>
+                    <motion.button 
+                    whileHover={{scale: 1.1, color: 'black'}}
+                    transition={{duration: 0.25}}>
+                        <h2>Collections</h2>
+                    </motion.button>
+                    <motion.button
+                    whileHover={{scale: 1.1, color: 'black'}}
+                    transition={{duration: 0.25}}>
+                        <h2>Men</h2>
+                    </motion.button>
+                    <motion.button
+                    whileHover={{scale: 1.1, color: 'black'}}
+                    transition={{duration: 0.25}}>
+                        <h2>Women</h2>
+                    </motion.button>
+                    <motion.button
+                    whileHover={{scale: 1.1, color: 'black'}}
+                    transition={{duration: 0.25}}>
+                        <h2>About</h2>
+                    </motion.button>
+                    <motion.button
+                    whileHover={{scale: 1.1, color: 'black'}}
+                    transition={{duration: 0.25}}>
+                        <h2>Contact</h2>
+                    </motion.button>
+                </div>
             </div>
 
-            <div className='flex items-end space-x-6'>
+            
+
+            <div className='flex items-end space-x-6 lg:items-center lg:space-x-10'>
                 <button type='button' aria-label='Press here to see your shopping list'>
                     <img src={menuCart} alt="shopping cart"/>
                 </button>
-                <img src={profileIcon} alt="" className='w-6'></img>
+                <img src={profileIcon} alt="" className='w-6 lg:w-12'></img>
             </div>
 
             <AnimatePresence>
@@ -73,6 +107,7 @@ export default function Header() {
                 </>
                 }
             </AnimatePresence>
+
         </motion.header>
     )
 }

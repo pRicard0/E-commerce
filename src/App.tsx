@@ -5,10 +5,12 @@ import TextArea from "./components/TextArea"
 function App() {
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen lg:px-36 lg:box-border">
       <Header></Header>
-      <Product></Product>
-      <TextArea></TextArea>
+      <div className="lg:mx-12 lg:mt-20 lg:flex lg:space-x-imgTextAreaSpacing">
+        <Product></Product>
+        <TextArea></TextArea>
+      </div>
     </div>
   )
 }

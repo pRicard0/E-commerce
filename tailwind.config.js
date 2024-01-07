@@ -6,8 +6,16 @@ export default {
       fontSize: {
         'header-title': '2rem',
         'h1': '1.75rem',
-        'h2': '0.7775rem'
+        'h1Desktop': '2.6rem',
+        'h2': '0.7775rem',
+        'priceDesktop': '1.8rem'
       },
+
+      spacing: {
+        'imgThumbWidth': '25.4rem',
+        'imgTextAreaSpacing': '5.4rem'
+      },
+
       colors: {
         neutral: {
           'Very-dark-blue': 'hsl(220, 13%, 13%)',
