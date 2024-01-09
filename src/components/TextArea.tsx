@@ -26,13 +26,13 @@ export default function TextArea() {
 
     return (
         <motion.div initial={{x: '100vw'}} animate={{x: '0'}} transition={{duration: 0.6, delay: 1}} className="font-Kumbh p-6 lg:pt-14">
-            <div className="space-y-2 lg:space-y-4">
+            <div className="space-y-2 lg:space-y-4 pt-2">
                 <h2 className="text-primary-Orange font-bold text-h2 uppercase tracking-widest">Sneaker company</h2>
                 <h1 className="text-h1 font-bold leading-8 lg:text-h1Desktop lg:leading-10 lg:pb-2">Fall Limited Edition Sneakers</h1>
                 <p className="text-neutral-Dark-grayish-blue pt-2 tracking-tight">These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.</p>
             </div>
 
-            <div className="flex justify-between items-center my-7">
+            <div className="flex justify-between items-center my-7 lg:flex-col lg:items-start">
                 <div className="flex items-center space-x-5">
                     <em className="font-bold not-italic text-3xl lg:text-priceDesktop">$125.00</em>
                     <div className="bg-primary-Pale-orange rounded-md h-7 px-2 flex items-center">
@@ -42,8 +42,8 @@ export default function TextArea() {
                 <s className="text-neutral-Dark-grayish-blue font-bold opacity-60 tracking-wide">$250.00</s>
             </div>
 
-            <div className='space-y-5 lg:flex lg:space-x-3'>
-                <div className='flex items-center justify-between bg-neutral-Light-grayish-blue rounded-lg p-3 px-6 lg:w-30'>
+            <div className='space-y-5 lg:flex lg:space-x-4 lg:space-y-0'>
+                <div className='flex items-center justify-between bg-neutral-Light-grayish-blue rounded-lg p-3 px-5 lg:w-1/2 lg:h-12'>
                     <button id='minus' type='button' onClick={subtraction}>
                         <img src={minus} alt="" />
                     </button>

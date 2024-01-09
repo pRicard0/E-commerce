@@ -7,16 +7,25 @@ import { useState } from 'react'
 
 import { motion, AnimatePresence } from "framer-motion"
 
+const tabs = [
+    { id: "collections", label: "Collections"},
+    { id: "men", label: "Men"},
+    { id: "women", label: "Women"},
+    { id: "about", label: "About"},
+    { id: "contact", label: "Contact"},
+]
+
 export default function Header() {
     const [openMenu, setOpenMenu] = useState(false)
-
+    const [activeTab, setActiveTab] = useState(tabs[0].id)
+ 
     return (
         <motion.header
         initial={{y: '-4.25rem'}}
         animate={{y: 0}}
         transition={{type:'just', duration: 0.6, delay: 0.1}}
-        className='flex justify-between p-6 py-5 pb-6 lg:border-b-2 lg:border-gray-200 lg:pb-10 lg:px-0 lg:pt-4'>
-            <div className='flex items-end space-x-4 pb-1'>
+        className='flex justify-between p-6 py-5 pb-6 lg:border-b-2 lg:border-gray-200 lg:p-0 lg:h-24 lg:items-center'>
+            <div className='flex items-end space-x-4 pb-1 lg:p-0 lg:h-full lg:items-center'>
                 <button 
                 type='button' 
                 aria-label='Press here to open the menu' 
@@ -26,32 +35,18 @@ export default function Header() {
                 </button>
                 <img src={logo} alt=""/>
 
-                <div className='hidden lg:flex lg:space-x-6 lg:pl-5 font-Kumbh text-neutral-Dark-grayish-blue'>
-                    <motion.button 
-                    whileHover={{scale: 1.1, color: 'black'}}
-                    transition={{duration: 0.25}}>
-                        <h2>Collections</h2>
-                    </motion.button>
-                    <motion.button
-                    whileHover={{scale: 1.1, color: 'black'}}
-                    transition={{duration: 0.25}}>
-                        <h2>Men</h2>
-                    </motion.button>
-                    <motion.button
-                    whileHover={{scale: 1.1, color: 'black'}}
-                    transition={{duration: 0.25}}>
-                        <h2>Women</h2>
-                    </motion.button>
-                    <motion.button
-                    whileHover={{scale: 1.1, color: 'black'}}
-                    transition={{duration: 0.25}}>
-                        <h2>About</h2>
-                    </motion.button>
-                    <motion.button
-                    whileHover={{scale: 1.1, color: 'black'}}
-                    transition={{duration: 0.25}}>
-                        <h2>Contact</h2>
-                    </motion.button>
+                <div className='hidden lg:flex lg:space-x-5 lg:pl-5 font-Kumbh text-neutral-Dark-grayish-blue h-full'>
+                    {tabs.map((tab) => (
+                        <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`${activeTab === tab.id ? "" : "hover:opacity-60"} relative rounded-full px-3 py-1 font-Kumbh`}
+                        >
+                            {activeTab === tab.id && (
+                            <motion.div layoutId='active' className=' border-b-4 border-primary-Orange absolute inset-0'/>)}
+                            <span className='relative z-10'>{tab.label}</span>
+                        </button>
+                    ))}
                 </div>
             </div>
 

@@ -27,11 +27,11 @@ export default function Product() {
                 <div className='rounded-xl overflow-hidden w-imgThumbWidth'>
                     <img src={product1desktop} alt="" className='w-full lg:block' />
                 </div>
-                <div>
-                    <img src={product1Thumb} alt="" />
-                    <img src={product2Thumb} alt="" />
-                    <img src={product3Thumb} alt="" />
-                    <img src={product4Thumb} alt="" />
+                <div className='flex justify-between pt-9'>
+                    <img src={product1Thumb} width={80} alt="" className='rounded-lg'/>
+                    <img src={product2Thumb} width={80} alt="" className='rounded-lg'/>
+                    <img src={product3Thumb} width={80} alt="" className='rounded-lg'/>
+                    <img src={product4Thumb} width={80} alt="" className='rounded-lg'/>
                 </div>
             </div>
         </div>
