@@ -1,16 +1,38 @@
 import { motion } from 'framer-motion'
 import product1mobile from '../assets/images/image-product-1-mobile.jpg'
-import product1desktop from '../assets/images/image-product-1.jpg'
 import next from '../assets/images/icon-next.svg'
 import previous from '../assets/images/icon-previous.svg'
 
-import product1Thumb from '../assets/images/image-product-1-thumbnail.jpg'
-import product2Thumb from '../assets/images/image-product-2-thumbnail.jpg'
-import product3Thumb from '../assets/images/image-product-3-thumbnail.jpg'
-import product4Thumb from '../assets/images/image-product-4-thumbnail.jpg'
+import productThumb1 from '../assets/images/image-product-1-thumbnail.jpg'
+import productThumb2 from '../assets/images/image-product-2-thumbnail.jpg'
+import productThumb3 from '../assets/images/image-product-3-thumbnail.jpg'
+import productThumb4 from '../assets/images/image-product-4-thumbnail.jpg'
+import productImage1 from '../assets/images/image-product-1.jpg'
+import productImage2 from '../assets/images/image-product-2.jpg'
+import productImage3 from '../assets/images/image-product-3.jpg'
+import productImage4 from '../assets/images/image-product-4.jpg'
+import { useState } from 'react'
 
+const productThumbs = [
+    {id:'productThumb1', src: productThumb1, width: 80, index: 0},
+    {id:'productThumb2', src: productThumb2, width: 80, index: 1},
+    {id:'productThumb3', src: productThumb3, width: 80, index: 2},
+    {id:'productThumb4', src: productThumb4, width: 80, index: 3}
+]
+
+const productImages = [productImage1, productImage2, productImage3, productImage4]
 
 export default function Product() {
+    const [activeThumb, setActiveThumb] = useState(productThumbs[0].id)
+
+    const handleClick = (thumb: { id: string, src: string, index: number}) => {
+        setActiveThumb(thumb.id)
+
+        const desktopProductPicture = document.getElementById('desktopProduct')
+        if (desktopProductPicture instanceof HTMLImageElement) {
+            desktopProductPicture.src = productImages[thumb.index]
+        }
+    }
     return (
         <div>
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.6, delay: 0.6}} className='relative lg:hidden lg:not-sr-only'>
@@ -25,13 +47,21 @@ export default function Product() {
 
             <div className='hidden not-sr-only lg:block'>
                 <div className='rounded-xl overflow-hidden w-imgThumbWidth'>
-                    <img src={product1desktop} alt="" className='w-full lg:block' />
+                    <img id='desktopProduct' src={productImage1} alt="" className='w-full lg:block cursor-pointer' />
                 </div>
                 <div className='flex justify-between pt-9'>
-                    <img src={product1Thumb} width={80} alt="" className='rounded-lg'/>
-                    <img src={product2Thumb} width={80} alt="" className='rounded-lg'/>
-                    <img src={product3Thumb} width={80} alt="" className='rounded-lg'/>
-                    <img src={product4Thumb} width={80} alt="" className='rounded-lg'/>
+                    {productThumbs.map((thumb) => (
+                        <div
+                        key={thumb.id}
+                        onClick={() => handleClick(thumb)}
+                        className={`${activeThumb === thumb.id ? 'border-2 border-primary-Orange' : ''} rounded-lg`}>
+                            <img
+                            key={thumb.id}
+                            src={thumb.src}
+                            width={thumb.width}
+                            className={`${activeThumb === thumb.id ? 'opacity-20 rounded-md' : 'rounded-lg'} cursor-pointer`}/>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

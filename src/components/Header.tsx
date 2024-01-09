@@ -40,7 +40,7 @@ export default function Header() {
                         <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`${activeTab === tab.id ? "" : "hover:opacity-60"} relative rounded-full px-3 py-1 font-Kumbh`}
+                        className={`${activeTab === tab.id ? "" : "hover:opacity-60"} relative px-3 py-1 font-Kumbh`}
                         >
                             {activeTab === tab.id && (
                             <motion.div layoutId='active' className=' border-b-4 border-primary-Orange absolute inset-0'/>)}
