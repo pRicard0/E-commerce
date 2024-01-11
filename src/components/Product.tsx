@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import product1mobile from '../assets/images/image-product-1-mobile.jpg'
 import next from '../assets/images/icon-next.svg'
 import previous from '../assets/images/icon-previous.svg'
@@ -20,7 +20,18 @@ const productThumbs = [
     {id:'productThumb4', src: productThumb4, width: 80, index: 3}
 ]
 
-const productImages = [productImage1, productImage2, productImage3, productImage4]
+const productImages = [
+    {src: productImage1, id: 'productImage1'}, 
+    {src: productImage2, id: 'productImage2'}, 
+    {src: productImage3, id: 'productImage3'}, 
+    {src: productImage4, id: 'productImage4'}
+]
+
+const variants = {
+    enter: {opacity: 0, x: 500},
+    visible: {opacity: 1, x: 0},
+    exit: {opacity: 0, x: -300}
+}
 
 export default function Product() {
     const [activeThumb, setActiveThumb] = useState(productThumbs[0].id)
@@ -38,7 +49,7 @@ export default function Product() {
     const handleClick = (thumb: { id: string, src: string, index: number}) => {
         setActiveThumb(thumb.id)
         if (desktopProductPicture instanceof HTMLImageElement) {
-            desktopProductPicture.src = productImages[thumb.index]
+            desktopProductPicture.src = productImages[thumb.index].src
         }
     }
 
@@ -78,7 +89,7 @@ export default function Product() {
                 <div className='rounded-xl overflow-hidden w-imgThumbWidth'>
                     <img 
                     id='desktopProduct' 
-                    src={productImage1} 
+                    src={productImages[0].src} 
                     onClick={() => showModal()}
                     alt="" 
                     className='w-full lg:block cursor-pointer' />
@@ -98,51 +109,69 @@ export default function Product() {
                     ))}
                 </div>
             </div>
-            {isModalVisible && (
-                <div>
-                    <motion.div
-                    initial={{opacity: 0}}
-                    animate={{opacity: 0.80}}
-                    transition={{duration: 0.3}}
-                    id='productModal'
-                    onClick={() => hideModal()}
-                    className='fixed top-0 left-0 bg-black w-full h-screen z-20'>
-                    </motion.div>
-                    <div className='fixed z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-                        <div className='relative'>
-                            <img src={productImages[parseInt(activeThumb[12]) - 1]} alt="" width={450} className='rounded-xl'/>
-                            <button aria-label='previous picture'>
-                                <img
-                                onClick={() => seePreviousPicture()} 
-                                src={previous} 
-                                alt="" 
-                                className='bg-white p-4 px-5 rounded-full absolute top-1/2 left-0 transform -translate-x-1/2 -translate-y-12' />
-                            </button>
-                            <button aria-label='next picture'>
-                                <img 
-                                onClick={() => seeNextPicture()}
-                                src={next} 
-                                alt="" 
-                                className='bg-white p-4 px-5 rounded-full absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-12'/>
-                            </button>
-                        </div>
-                        <div className='flex justify-between pt-3'>
-                            {productThumbs.map((thumb) => (
-                                <div
-                                key={thumb.id}
-                                onClick={() => handleClick(thumb)}
-                                className={`${activeThumb === thumb.id ? 'border-2 border-primary-Orange bg-white' : ''} rounded-lg`}>
+
+            <AnimatePresence>
+                {isModalVisible && (
+                    <div>
+                        <motion.div
+                        initial={{opacity: 0}}
+                        animate={{opacity: 0.80}}
+                        exit={{opacity: 0}}
+                        transition={{duration: 0.3}}
+                        id='productModal'
+                        onClick={() => hideModal()}
+                        className='fixed top-0 left-0 bg-black w-full h-screen z-20'>
+                        </motion.div>
+                        <div className='fixed z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+                            <motion.div initial={{opacity: 0}} animate = {{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.3}} className='relative'>
+
+                                <motion.div className='flex overflow-hidden w-imgModalContainer'>
+                                    <AnimatePresence initial={false} mode='wait'>
+                                        <motion.img 
+                                        key={parseInt(activeThumb[12]) - 1}
+                                        src={productImages[parseInt(activeThumb[12]) - 1].src}
+                                        variants={variants}
+                                        initial='enter'
+                                        animate='visible'
+                                        exit='exit'
+                                        transition={{x:  {type:'spring', stiffness: 200, damping: 20}, duration: 0.2}}
+                                        className='rounded-xl'/>
+                                    </AnimatePresence>
+                                </motion.div>
+
+                                <button aria-label='previous picture'>
                                     <img
+                                    onClick={() => seePreviousPicture()}
+                                    src={previous}
+                                    alt=""
+                                    className='bg-white p-4 px-5 rounded-full absolute top-1/2 left-0 transform -translate-x-1/2 -translate-y-12' />
+                                </button>
+                                <button aria-label='next picture'>
+                                    <img
+                                    onClick={() => seeNextPicture()}
+                                    src={next}
+                                    alt=""
+                                    className='bg-white p-4 px-5 rounded-full absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-12'/>
+                                </button>
+                            </motion.div>
+                            <div className='flex justify-between pt-3'>
+                                {productThumbs.map((thumb) => (
+                                    <div
                                     key={thumb.id}
-                                    src={thumb.src}
-                                    width={thumb.width}
-                                    className={`${activeThumb === thumb.id ? 'opacity-40 rounded-md' : 'rounded-lg'} cursor-pointer`}/>
-                                </div>
-                            ))} 
+                                    onClick={() => handleClick(thumb)}
+                                    className={`${activeThumb === thumb.id ? 'border-2 border-primary-Orange bg-white' : ''} rounded-lg`}>
+                                        <img
+                                        key={thumb.id}
+                                        src={thumb.src}
+                                        width={thumb.width}
+                                        className={`${activeThumb === thumb.id ? 'opacity-40 rounded-md' : 'rounded-lg'} cursor-pointer`}/>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </AnimatePresence>
         </div>
     )
 }

@@ -13,7 +13,8 @@ export default {
 
       spacing: {
         'imgThumbWidth': '25.4rem',
-        'imgTextAreaSpacing': '5.4rem'
+        'imgTextAreaSpacing': '5.4rem',
+        'imgModalContainer': '28.125rem'
       },
 
       colors: {
