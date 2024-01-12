@@ -28,53 +28,66 @@ const productImages = [
 ]
 
 const variants = {
-    enter: {opacity: 0, x: 500},
-    visible: {opacity: 1, x: 0},
-    exit: {opacity: 0, x: -300}
-}
+    enter: (direction: number) => {
+      return {
+        x: direction > 0 ? 600 : -600,
+        opacity: 0
+      };
+    },
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => {
+      return {
+        zIndex: 0,
+        x: direction < 0 ? 600 : -600,
+        opacity: 0,
+      };
+    }
+  };
 
 export default function Product() {
-    const [activeThumb, setActiveThumb] = useState(productThumbs[0].id)
+    const [[page, direction], setPage] = useState([0,0])
     const [isModalVisible, setIsModalVisible] = useState(false)
     const desktopProductPicture = document.getElementById('desktopProduct')
 
     const showModal = () => {
-        setIsModalVisible(true)
-    }
+        setIsModalVisible(true);
+      };
     
-    const hideModal = () => {
-        setIsModalVisible(false)
-    }
-
-    const handleClick = (thumb: { id: string, src: string, index: number}) => {
-        setActiveThumb(thumb.id)
+      const hideModal = () => {
+        setIsModalVisible(false);
+      };
+    
+      const wrap = (index: number, total: number) => {
+        if (index < 0) {
+          return total - 1;
+        }
+        if (index === total) {
+          return 0;
+        }
+        return index;
+      };
+    
+      const paginate = (newDirection: number) => {
+        const newIndex = wrap(page + newDirection, productImages.length);
+        setPage([newIndex, newDirection]);
+      };
+    
+      const handleClick = (thumb: { id: string; src: string; index: number }) => {
+        const newIndex = thumb.index;
+    
+        setPage([newIndex, newIndex > page ? 1 : -1]);
+    
         if (desktopProductPicture instanceof HTMLImageElement) {
-            desktopProductPicture.src = productImages[thumb.index].src
+          desktopProductPicture.src = productImages[newIndex].src;
         }
-    }
-
-    const seePreviousPicture = () => {
-        const currentIndex = parseInt(activeThumb.substring(12))
-        console.log(currentIndex)
-
-        if(currentIndex > 1 ) {
-            const previousIndex = currentIndex - 1
-            const previousImageId = `productImage${previousIndex}`
-            setActiveThumb(previousImageId)
-        }
-    }
-
-    const seeNextPicture = () => {
-        const currentIndex = parseInt(activeThumb.substring(12))
-        if(currentIndex < 4) {
-            const nextIndex = currentIndex + 1
-            const nextImageId = `productImage${nextIndex}`
-            setActiveThumb(nextImageId)
-        }
-    }
-
+      };
+    
     return (
-        <div>
+        <div >
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.6, delay: 0.6}} className='relative lg:hidden lg:not-sr-only'>
                 <img src={product1mobile} alt="" className='w-full'/>
                 <button type='button' className='absolute top-1/2 left-4 -translate-y-1/2 transform w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the previous picture'>
@@ -85,30 +98,37 @@ export default function Product() {
                 </button>
             </motion.div>
 
-            <div className='hidden not-sr-only lg:block'>
-                <div className='rounded-xl overflow-hidden w-imgThumbWidth'>
-                    <img 
-                    id='desktopProduct' 
-                    src={productImages[0].src} 
-                    onClick={() => showModal()}
-                    alt="" 
-                    className='w-full lg:block cursor-pointer' />
+            <motion.div initial={{x: '-100vw', opacity: 0}} animate={{x: 0, opacity: 1}} transition={{delay: 0.5, duration: 0.6}} className='hidden not-sr-only lg:block'>
+                <div className='rounded-xl overflow-hidden w-imgThumbWidth relative h-imgThumbWidth hover:bg-white hover:opacity-80 hover:transition'>
+                    <AnimatePresence initial={false}>
+                        <motion.img 
+                        key={page}
+                        src={productImages[page].src}
+                        variants={variants}
+                        custom={direction}
+                        initial='enter'
+                        animate='center'
+                        exit='exit'
+                        transition={{x:  {type:'spring', stiffness: 100, damping: 20}, duration: 0.3}}
+                        onClick={() => showModal()}
+                        className='rounded-xl absolute cursor-pointer'/>
+                    </AnimatePresence>
                 </div>
                 <div className='flex justify-between pt-9'>
                     {productThumbs.map((thumb) => (
                         <div
                         key={thumb.id}
                         onClick={() => handleClick(thumb)}
-                        className={`${activeThumb === thumb.id ? 'border-2 border-primary-Orange' : ''} rounded-lg`}>
+                        className={`${page === thumb.index ? 'border-2 border-primary-Orange' : 'hover:bg-white hover:opacity-80 hover:transition'} rounded-lg`}>
                             <img
                             key={thumb.id}
                             src={thumb.src}
                             width={thumb.width}
-                            className={`${activeThumb === thumb.id ? 'opacity-20 rounded-md' : 'rounded-lg'} cursor-pointer`}/>
+                            className={`${page === thumb.index ? 'opacity-20 rounded-md' : 'rounded-lg'} cursor-pointer`}/>
                         </div>
                     ))}
                 </div>
-            </div>
+            </motion.div>
 
             <AnimatePresence>
                 {isModalVisible && (
@@ -125,49 +145,50 @@ export default function Product() {
                         <div className='fixed z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
                             <motion.div initial={{opacity: 0}} animate = {{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.3}} className='relative'>
 
-                                <motion.div className='flex overflow-hidden w-imgModalContainer'>
-                                    <AnimatePresence initial={false} mode='wait'>
+                                <motion.div className='flex overflow-hidden w-imgModalContainer h-imgModalContainer '>
+                                    <AnimatePresence initial={false}>
                                         <motion.img 
-                                        key={parseInt(activeThumb[12]) - 1}
-                                        src={productImages[parseInt(activeThumb[12]) - 1].src}
+                                        key={page}
+                                        src={productImages[page].src}
                                         variants={variants}
+                                        custom={direction}
                                         initial='enter'
-                                        animate='visible'
+                                        animate='center'
                                         exit='exit'
-                                        transition={{x:  {type:'spring', stiffness: 200, damping: 20}, duration: 0.2}}
-                                        className='rounded-xl'/>
+                                        transition={{x:  {type:'spring', stiffness: 100, damping: 20}, duration: 0.3}}
+                                        className='rounded-xl absolute'/>
                                     </AnimatePresence>
                                 </motion.div>
 
                                 <button aria-label='previous picture'>
                                     <img
-                                    onClick={() => seePreviousPicture()}
+                                    onClick={() => paginate(-1)}
                                     src={previous}
                                     alt=""
-                                    className='bg-white p-4 px-5 rounded-full absolute top-1/2 left-0 transform -translate-x-1/2 -translate-y-12' />
+                                    className='bg-white p-4 px-5 rounded-full absolute top-1/2 left-0 transform -translate-x-1/2 -translate-y-12 z-10' />
                                 </button>
                                 <button aria-label='next picture'>
                                     <img
-                                    onClick={() => seeNextPicture()}
+                                    onClick={() => paginate(1)}
                                     src={next}
                                     alt=""
-                                    className='bg-white p-4 px-5 rounded-full absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-12'/>
+                                    className='bg-white p-4 px-5 rounded-full absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-12 z-10'/>
                                 </button>
                             </motion.div>
-                            <div className='flex justify-between pt-3'>
+                            <motion.div initial={{opacity: 0}} animate = {{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.3}} className='flex justify-between pt-3'>
                                 {productThumbs.map((thumb) => (
                                     <div
                                     key={thumb.id}
                                     onClick={() => handleClick(thumb)}
-                                    className={`${activeThumb === thumb.id ? 'border-2 border-primary-Orange bg-white' : ''} rounded-lg`}>
+                                    className={`${page === thumb.index ? 'border-2 border-primary-Orange bg-white' : 'hover:bg-white'} rounded-lg h-20`}>
                                         <img
                                         key={thumb.id}
                                         src={thumb.src}
                                         width={thumb.width}
-                                        className={`${activeThumb === thumb.id ? 'opacity-40 rounded-md' : 'rounded-lg'} cursor-pointer`}/>
+                                        className={`${page === thumb.index ? 'opacity-40 rounded-md' : 'rounded-lg hover:opacity-90'} cursor-pointer`}/>
                                     </div>
                                 ))}
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
                 )}

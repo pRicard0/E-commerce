@@ -21,7 +21,7 @@ export default function Header() {
  
     return (
         <motion.header
-        initial={{y: '-4.25rem'}}
+        initial={{y: '-6rem'}}
         animate={{y: 0}}
         transition={{type:'just', duration: 0.6, delay: 0.1}}
         className='flex justify-between p-6 py-5 pb-6 lg:border-b-2 lg:border-gray-200 lg:p-0 lg:h-24 lg:items-center'>

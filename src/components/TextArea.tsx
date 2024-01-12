@@ -25,7 +25,7 @@ export default function TextArea() {
     }
 
     return (
-        <motion.div initial={{x: '100vw'}} animate={{x: '0'}} transition={{duration: 0.6, delay: 1}} className="font-Kumbh p-6 lg:pt-14">
+        <motion.div initial={{x: '100vw', opacity: 0}} animate={{x: '0', opacity: 1}} transition={{duration: 0.6, delay: 1}} className="font-Kumbh p-6 lg:pt-14">
             <div className="space-y-2 lg:space-y-4 pt-2">
                 <h2 className="text-primary-Orange font-bold text-h2 uppercase tracking-widest">Sneaker company</h2>
                 <h1 className="text-h1 font-bold leading-8 lg:text-h1Desktop lg:leading-10 lg:pb-2">Fall Limited Edition Sneakers</h1>
