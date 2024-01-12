@@ -24,7 +24,7 @@ export default function Header() {
         initial={{y: '-6rem'}}
         animate={{y: 0}}
         transition={{type:'just', duration: 0.6, delay: 0.1}}
-        className='flex justify-between p-6 py-5 pb-6 lg:border-b-2 lg:border-gray-200 lg:p-0 lg:h-24 lg:items-center'>
+        className='flex justify-between p-6 py-5 pb-6 lg:border-b-2 lg:border-gray-200 lg:p-0 lg:h-28 lg:items-center'>
             <div className='flex items-end space-x-4 pb-1 lg:p-0 lg:h-full lg:items-center'>
                 <button 
                 type='button' 
@@ -35,7 +35,7 @@ export default function Header() {
                 </button>
                 <img src={logo} alt=""/>
 
-                <div className='hidden lg:flex lg:space-x-5 lg:pl-5 font-Kumbh text-neutral-Dark-grayish-blue h-full'>
+                <div className='hidden lg:flex lg:space-x-1 lg:pl-8 font-Kumbh text-neutral-Dark-grayish-blue h-full'>
                     {tabs.map((tab) => (
                         <button
                         key={tab.id}
@@ -52,7 +52,7 @@ export default function Header() {
 
             
 
-            <div className='flex items-end space-x-6 lg:items-center lg:space-x-10'>
+            <div className='flex items-end space-x-6 lg:items-center lg:space-x-12 pr-1'>
                 <button type='button' aria-label='Press here to see your shopping list'>
                     <img src={menuCart} alt="shopping cart"/>
                 </button>

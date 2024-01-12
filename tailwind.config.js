@@ -6,15 +6,25 @@ export default {
       fontSize: {
         'header-title': '2rem',
         'h1': '1.75rem',
-        'h1Desktop': '2.6rem',
+        'h1Desktop': '2.75rem',
         'h2': '0.7775rem',
-        'priceDesktop': '1.8rem'
+        'priceDesktop': '1.875rem'
+      },
+
+      lineHeight: {
+        'h1Leading': '2.9rem'
+      },
+
+      boxShadow: {
+        'cartButton': '0px 20px 30px -10px'
       },
 
       spacing: {
-        'imgThumbWidth': '25.4rem',
+        'imgThumbWidth': '27.975rem',
         'imgTextAreaSpacing': '5.4rem',
-        'imgModalContainer': '28.125rem'
+        'imgModalContainer': '28.5rem',
+        'productMarginTop': '5.75rem',
+        'productMarginLeft': '4.25rem'
       },
 
       colors: {

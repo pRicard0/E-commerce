@@ -14,10 +14,10 @@ import productImage4 from '../assets/images/image-product-4.jpg'
 import { useState } from 'react'
 
 const productThumbs = [
-    {id:'productThumb1', src: productThumb1, width: 80, index: 0},
-    {id:'productThumb2', src: productThumb2, width: 80, index: 1},
-    {id:'productThumb3', src: productThumb3, width: 80, index: 2},
-    {id:'productThumb4', src: productThumb4, width: 80, index: 3}
+    {id:'productThumb1', src: productThumb1, width: 90, index: 0},
+    {id:'productThumb2', src: productThumb2, width: 90, index: 1},
+    {id:'productThumb3', src: productThumb3, width: 90, index: 2},
+    {id:'productThumb4', src: productThumb4, width: 90, index: 3}
 ]
 
 const productImages = [
@@ -114,17 +114,17 @@ export default function Product() {
                         className='rounded-xl absolute cursor-pointer'/>
                     </AnimatePresence>
                 </div>
-                <div className='flex justify-between pt-9'>
+                <div className='flex justify-between pt-7'>
                     {productThumbs.map((thumb) => (
                         <div
                         key={thumb.id}
                         onClick={() => handleClick(thumb)}
-                        className={`${page === thumb.index ? 'border-2 border-primary-Orange' : 'hover:bg-white hover:opacity-80 hover:transition'} rounded-lg`}>
+                        className={`${page === thumb.index ? 'border-2 border-primary-Orange' : 'hover:bg-white hover:opacity-80 hover:transition'} rounded-xl`}>
                             <img
                             key={thumb.id}
                             src={thumb.src}
                             width={thumb.width}
-                            className={`${page === thumb.index ? 'opacity-20 rounded-md' : 'rounded-lg'} cursor-pointer`}/>
+                            className={`${page === thumb.index ? 'opacity-20 rounded-md' : 'rounded-lg'} cursor-pointer rounded-xl`}/>
                         </div>
                     ))}
                 </div>
@@ -180,12 +180,12 @@ export default function Product() {
                                     <div
                                     key={thumb.id}
                                     onClick={() => handleClick(thumb)}
-                                    className={`${page === thumb.index ? 'border-2 border-primary-Orange bg-white' : 'hover:bg-white'} rounded-lg h-20`}>
+                                    className={`rounded-xl ${page === thumb.index ? 'border-2 border-primary-Orange bg-white' : 'hover:bg-white'}`}>
                                         <img
                                         key={thumb.id}
                                         src={thumb.src}
                                         width={thumb.width}
-                                        className={`${page === thumb.index ? 'opacity-40 rounded-md' : 'rounded-lg hover:opacity-90'} cursor-pointer`}/>
+                                        className={`${page === thumb.index ? 'opacity-40 rounded-md' : 'hover:opacity-90'} cursor-pointer rounded-xl`}/>
                                     </div>
                                 ))}
                             </motion.div>
