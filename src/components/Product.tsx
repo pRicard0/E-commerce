@@ -87,7 +87,7 @@ export default function Product() {
       };
     
     return (
-        <div >
+        <section>
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.6, delay: 0.6}} className='relative lg:hidden lg:not-sr-only'>
                 <img src={product1mobile} alt="" className='w-full'/>
                 <button type='button' className='absolute top-1/2 left-4 -translate-y-1/2 transform w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the previous picture'>
@@ -114,21 +114,27 @@ export default function Product() {
                         className='rounded-xl absolute cursor-pointer'/>
                     </AnimatePresence>
                 </div>
-                <div className='flex justify-between pt-7'>
-                    {productThumbs.map((thumb) => (
-                        <div
-                        key={thumb.id}
-                        onClick={() => handleClick(thumb)}
-                        className={`${page === thumb.index ? 'border-2 border-primary-Orange' : 'hover:bg-white hover:opacity-80 hover:transition'} rounded-xl`}>
-                            <img
-                            key={thumb.id}
-                            src={thumb.src}
-                            width={thumb.width}
-                            className={`${page === thumb.index ? 'opacity-20 rounded-md' : 'rounded-lg'} cursor-pointer rounded-xl`}/>
-                        </div>
-                    ))}
-                </div>
-            </motion.div>
+                  <div className='flex justify-between pt-7'>
+                      {productThumbs.map((thumb) => (
+                          <button
+                          key={thumb.id}
+                          onClick={() => handleClick(thumb)}
+                          aria-describedby='ImageButtonText'
+                          tabIndex={thumb.index}
+                          type='button'
+                          aria-selected={page === thumb.index}
+                          className={`${page === thumb.index ? 'border-2 border-primary-Orange' : 'hover:bg-white hover:opacity-80 hover:transition'} rounded-xl`}>
+                            <span id='ImageButtonText' className='sr-only'>Press here to open the image</span>
+                              <img
+                              key={thumb.id}
+                              src={thumb.src}
+                              width={thumb.width}
+                              alt={`Thumbnail ${thumb.index + 1}`}
+                              className={`${page === thumb.index ? 'opacity-20 rounded-md' : 'rounded-lg'} cursor-pointer rounded-xl`}/>
+                          </button>
+                      ))}
+                  </div>
+              </motion.div>
 
             <AnimatePresence>
                 {isModalVisible && (
@@ -177,22 +183,28 @@ export default function Product() {
                             </motion.div>
                             <motion.div initial={{opacity: 0}} animate = {{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.3}} className='flex justify-between pt-3'>
                                 {productThumbs.map((thumb) => (
-                                    <div
+                                    <button
                                     key={thumb.id}
                                     onClick={() => handleClick(thumb)}
+                                    aria-describedby='modalImageButtonText'
+                                    tabIndex={thumb.index}
+                                    type='button'
+                                    aria-selected={page === thumb.index}
                                     className={`rounded-xl ${page === thumb.index ? 'border-2 border-primary-Orange bg-white' : 'hover:bg-white'}`}>
+                                      <span id='modalImageButtonText' className='sr-only'>Press here to open the image</span>
                                         <img
                                         key={thumb.id}
                                         src={thumb.src}
                                         width={thumb.width}
+                                        alt={`Thumbnail ${thumb.index + 1}`}
                                         className={`${page === thumb.index ? 'opacity-40 rounded-md' : 'hover:opacity-90'} cursor-pointer rounded-xl`}/>
-                                    </div>
+                                    </button>
                                 ))}
                             </motion.div>
                         </div>
                     </div>
                 )}
             </AnimatePresence>
-        </div>
+        </section>
     )
 }

@@ -15,9 +15,13 @@ const tabs = [
     { id: "contact", label: "Contact"},
 ]
 
-export default function Header() {
+export default function Header({amountOfProduct}: {amountOfProduct: number}) {
     const [openMenu, setOpenMenu] = useState(false)
     const [activeTab, setActiveTab] = useState(tabs[0].id)
+
+    const openCart = () => {
+        window.alert(amountOfProduct)
+    }
  
     return (
         <motion.header
@@ -35,10 +39,12 @@ export default function Header() {
                 </button>
                 <img src={logo} alt=""/>
 
-                <div className='hidden lg:flex lg:space-x-1 lg:pl-8 font-Kumbh text-neutral-Dark-grayish-blue h-full'>
+                <nav className='hidden lg:flex lg:space-x-1 lg:pl-8 font-Kumbh text-neutral-Dark-grayish-blue h-full'>
                     {tabs.map((tab) => (
                         <button
                         key={tab.id}
+                        type='button'
+                        aria-selected={activeTab === tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`${activeTab === tab.id ? "" : "hover:opacity-60"} relative px-3 py-1 font-Kumbh`}
                         >
@@ -47,16 +53,19 @@ export default function Header() {
                             <span className='relative z-10'>{tab.label}</span>
                         </button>
                     ))}
-                </div>
+                </nav>
             </div>
 
             
 
             <div className='flex items-end space-x-6 lg:items-center lg:space-x-12 pr-1'>
-                <button type='button' aria-label='Press here to see your shopping list'>
-                    <img src={menuCart} alt="shopping cart"/>
+                <button 
+                type='button' 
+                aria-label='Press here to see your shopping list'
+                onClick={() => openCart()}>
+                    <img src={menuCart} alt="" role='presentation'/>
                 </button>
-                <img src={profileIcon} alt="" className='w-6 lg:w-12'></img>
+                <img src={profileIcon} alt="profile" className='w-6 lg:w-12'></img>
             </div>
 
             <AnimatePresence>
@@ -70,7 +79,7 @@ export default function Header() {
                     onClick={() => setOpenMenu(false)}
                     className='absolute top-0 left-0 w-full h-full bg-black opacity-60 z-40'/>
 
-                    <motion.div
+                    <motion.nav
                     initial={{x:'-16rem'}}
                     animate={{x:'0'}}
                     transition={{type: 'just'}}
@@ -98,7 +107,7 @@ export default function Header() {
                                 <button>Contact</button>
                             </motion.li>
                         </motion.ul>
-                    </motion.div>
+                    </motion.nav>
                 </>
                 }
             </AnimatePresence>
