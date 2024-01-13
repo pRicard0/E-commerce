@@ -57,8 +57,8 @@ function App() {
         <motion.section id="text-section" initial={{x: '100vw', opacity: 0}} animate={{x: '0', opacity: 1}} transition={{duration: 0.6, delay: 1}} className="font-Kumbh p-6 lg:pt-12 lg:pl-9 lg:pr-0"> 
           <TextArea></TextArea>
           <div className='space-y-5 lg:flex lg:space-x-4 lg:space-y-0 lg:mt-9'>
-              <div className='flex items-center justify-between bg-neutral-Light-grayish-blue rounded-lg p-3 px-1 lg:w-60 lg:h-14'>
-                  <button id='minus' type='button' onClick={() => toUpdateNumber(-1)} onMouseEnter={() => minusColorEnter()} onMouseLeave={() => minusColorLeave()} className='h-full px-2'>
+              <div className='flex items-center justify-between bg-neutral-Light-grayish-blue rounded-lg p-1 px-1 lg:p-3 lg:w-60 lg:h-14'>
+                  <button id='minus' type='button' onClick={() => toUpdateNumber(-1)} onMouseEnter={() => minusColorEnter()} onMouseLeave={() => minusColorLeave()} className='h-full px-2 py-3 lg:py-0'>
                     <span className="sr-only">Press here to subtract one product</span>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -74,11 +74,11 @@ function App() {
                         d="M11.357 3.332A.641.641 0 0012 2.69V.643A.641.641 0 0011.357 0H.643A.641.641 0 000 .643v2.046c0 .357.287.643.643.643h10.714z"
                       ></path>
                     </defs>
-                    <use className="transition-colors duration-200" id="minusElement" fill="#FF7E1B" xlinkHref="#a"></use>
+                    <use className="transition-colors duration-200" id="minusElement" fill="#FFCBA6" xlinkHref="#a"></use>
                   </svg>
                   </button>
                   <p aria-label="Actual amount" id="number" className='font-bold'>{number}</p>
-                  <button id='plus' type='button' onClick={() => toUpdateNumber(1)} onMouseEnter={() => plusColorEnter()} onMouseLeave={() => plusColorLeave()} className='h-full px-2'>
+                  <button id='plus' type='button' onClick={() => toUpdateNumber(1)} onMouseEnter={() => plusColorEnter()} onMouseLeave={() => plusColorLeave()} className='h-full py-3 px-2 lg:py-0'>
                     <span className="sr-only">Press here to buy one more</span>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"

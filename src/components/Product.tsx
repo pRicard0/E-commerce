@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import product1mobile from '../assets/images/image-product-1-mobile.jpg'
 import next from '../assets/images/icon-next.svg'
 import previous from '../assets/images/icon-previous.svg'
 
@@ -11,6 +10,10 @@ import productImage1 from '../assets/images/image-product-1.jpg'
 import productImage2 from '../assets/images/image-product-2.jpg'
 import productImage3 from '../assets/images/image-product-3.jpg'
 import productImage4 from '../assets/images/image-product-4.jpg'
+import productMobileImage1 from '../assets/images/image-product-1-mobile.jpg'
+import productMobileImage2 from '../assets/images/image-product-2-mobile.jpg'
+import productMobileImage3 from '../assets/images/image-product-3-mobile.jpg'
+import productMobileImage4 from '../assets/images/image-product-4-mobile.jpg'
 import { useState } from 'react'
 
 const productThumbs = [
@@ -25,6 +28,13 @@ const productImages = [
     {src: productImage2, id: 'productImage2'}, 
     {src: productImage3, id: 'productImage3'}, 
     {src: productImage4, id: 'productImage4'}
+]
+
+const productMobileImages = [
+  {src: productMobileImage1, id: 'productMobileImage1'},
+  {src: productMobileImage2, id: 'productMobileImage2'},
+  {src: productMobileImage3, id: 'productMobileImage3'},
+  {src: productMobileImage4, id: 'productMobileImage4'}
 ]
 
 const variants = {
@@ -89,12 +99,25 @@ export default function Product() {
     return (
         <section>
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.6, delay: 0.6}} className='relative lg:hidden lg:not-sr-only'>
-                <img src={product1mobile} alt="" className='w-full'/>
-                <button type='button' className='absolute top-1/2 left-4 -translate-y-1/2 transform w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the previous picture'>
-                    <img src={previous} alt="" />
+                <div className='relative w-full h-imgMobileHeight overflow-hidden'>
+                  <AnimatePresence>
+                  <motion.img
+                          key={page}
+                          src={productMobileImages[page].src}
+                          variants={variants}
+                          custom={direction}
+                          initial='enter'
+                          animate='center'
+                          exit='exit'
+                          transition={{x:  {type:'spring', stiffness: 100, damping: 20}, duration: 0.3}}
+                          className='absolute z-10'/>
+                  </AnimatePresence>
+                </div>
+                <button type='button' className='absolute z-20 top-1/2 left-4 -translate-y-1/2 transform w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the previous picture'>
+                    <img src={previous} alt="" onClick={() => paginate(-1)} />
                 </button>
-                <button type='button' className='absolute top-1/2 right-4 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the next picture'>
-                    <img src={next} alt="" />
+                <button type='button' className='absolute z-20 top-1/2 right-4 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the next picture'>
+                    <img src={next} alt="" onClick={() => paginate(1)} />
                 </button>
             </motion.div>
 
