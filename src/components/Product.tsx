@@ -99,7 +99,7 @@ export default function Product() {
     return (
         <section>
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.6, delay: 0.6}} className='relative lg:hidden lg:not-sr-only'>
-                <div className='relative w-full h-imgMobileHeight overflow-hidden'>
+                <div className='relative w-full min-h-minImgMobileHeight sm:h-imgMobileHeight overflow-hidden'>
                   <AnimatePresence>
                   <motion.img
                           key={page}
@@ -110,13 +110,13 @@ export default function Product() {
                           animate='center'
                           exit='exit'
                           transition={{x:  {type:'spring', stiffness: 100, damping: 20}, duration: 0.3}}
-                          className='absolute z-10'/>
+                          className='absolute z-10 w-full h-full object-cover'/>
                   </AnimatePresence>
                 </div>
-                <button type='button' className='absolute z-20 top-1/2 left-4 -translate-y-1/2 transform w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the previous picture'>
+                <button type='button' className='absolute z-20 top-1/2 left-4 transform -translate-y-6 w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the previous picture'>
                     <img src={previous} alt="" onClick={() => paginate(-1)} />
                 </button>
-                <button type='button' className='absolute z-20 top-1/2 right-4 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the next picture'>
+                <button type='button' className='absolute z-20 top-1/2 right-4 transform -translate-y-6 w-10 h-10 flex items-center justify-center bg-white rounded-full' aria-label='Press here to see the next picture'>
                     <img src={next} alt="" onClick={() => paginate(1)} />
                 </button>
             </motion.div>

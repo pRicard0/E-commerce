@@ -16,7 +16,10 @@ function App() {
   }   
 
   const toAdd = () => {
-      setAmountOfProduct(number)
+    if(number > 0) {
+      setAmountOfProduct(amountOfProduct + number)
+    }
+      setNumber(0)
   }
 
   if(number < 1) {

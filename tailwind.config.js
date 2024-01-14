@@ -16,12 +16,17 @@ export default {
       },
 
       boxShadow: {
-        'cartButton': '0px 20px 30px -10px'
+        'cartButton': '0px 20px 30px -10px',
+        'cartMenu': '0px 20px 35px 0px hsla(0, 100%, 0%, 0.3)'
+      },
+
+      minHeight: {
+        'minImgMobileHeight': '18rem'
       },
 
       spacing: {
         'imgThumbWidth': '27.975rem',
-        'imgMobileHeight': '20.625rem',
+        'imgMobileHeight': '28rem',
         'imgTextAreaSpacing': '5.4rem',
         'imgModalContainer': '28.5rem',
         'productMarginTop': '5.75rem',
