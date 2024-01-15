@@ -7,6 +7,10 @@ import productThumb from '../assets/images/image-product-1-thumbnail.jpg'
 import deleteIcon from '../assets/images/icon-delete.svg'
 import { useState } from 'react'
 import { motion, AnimatePresence } from "framer-motion"
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../state/store'
+import { deleteAmount } from '../state/product/productSlice'
+import { removeAmount } from '../state/product/warningSlice'
 
 const tabs = [
     { id: "collections", label: "Collections"},
@@ -16,14 +20,18 @@ const tabs = [
     { id: "contact", label: "Contact"},
 ]
 
-export default function Header({amountOfProduct}: {amountOfProduct: number}) {
+export default function Header() {
     const [isMenuOpened, setMenuOpened] = useState(false)
     const [activeTab, setActiveTab] = useState(tabs[0].id)
     const [isCartMenuOpened, setCartMenuOpened] = useState(false)
+    const amountOfProductWarning = useSelector((state: RootState) => state.warning.productIncreasedAmount)
+    const amountOfProduct = useSelector((state: RootState) => state.product.amountOfProducts)
+    const dispatch = useDispatch()
 
     const openAndCloseCart = () => {
         if(isCartMenuOpened === false) {
             setCartMenuOpened(true)
+            dispatch(removeAmount())
         } else {
             setCartMenuOpened(false)
         }
@@ -60,13 +68,13 @@ export default function Header({amountOfProduct}: {amountOfProduct: number}) {
                                 </div>
                             </div>
                             <button type='button' aria-label='Press here to delete your product'>
-                                <img src={deleteIcon} alt="" role='presentation'/>
+                                <img src={deleteIcon} alt="" role='presentation' onClick={() => dispatch(deleteAmount())}/>
                             </button>
                          </div>
                         <div className='px-5'>
-                            <button type="button" className='bg-primary-Orange w-full h-14 rounded-xl'>
+                            <motion.button whileTap={{scale: 0.95}} type="button" className='bg-primary-Orange w-full h-14 rounded-xl'>
                                 <span className='text-white font-bold'>Checkout</span>
-                            </button>
+                            </motion.button>
                         </div>
                     </motion.div>
                 </AnimatePresence>
@@ -82,7 +90,7 @@ export default function Header({amountOfProduct}: {amountOfProduct: number}) {
                     initial={{height: 0}}
                     animate={{height: 260}}
                     transition={{duration: 0.5}}
-                    className='font-Kumbh text-neutral-Dark-grayish-blue bg-white rounded-xl pb-8 shadow-cartMenu absolute right-2 transform translate-y-14 z-30 lg:translate-y-2/3 lg:-translate-x-1/2'>
+                    className='font-Kumbh text-neutral-Dark-grayish-blue bg-white rounded-xl pb-8 shadow-cartMenu absolute right-2 transform translate-y-14 z-30 lg:translate-y-2/3 lg:-translate-x-1/2 md'>
                         <h3 className='font-bold p-5 pb-6 text-black'>Cart</h3>
                         <hr/>
                         <div>
@@ -151,12 +159,18 @@ export default function Header({amountOfProduct}: {amountOfProduct: number}) {
                 onClick={() => openAndCloseCart()}
                 className='relative'>
                     <img src={menuCart} alt="" role='presentation'/>
-                    {amountOfProduct > 0 && 
-                    <>
-                    <div className='absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 bg-primary-Orange rounded-full px-2'>
-                        <p className='text-white font-Kumbh text-xs'>{amountOfProduct}</p>
-                    </div>
-                    </>}
+                    <AnimatePresence>
+                        {amountOfProductWarning > 0 &&
+                        <>
+                        <motion.div
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        className='absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 bg-primary-Orange rounded-full px-2'>
+                            <p className='text-white font-Kumbh text-xs'>{amountOfProductWarning}</p>
+                        </motion.div>
+                        </>}
+                    </AnimatePresence>
                 </button>     
                 <img src={profileIcon} alt="profile" className='w-6 lg:w-12'></img>
             </div>

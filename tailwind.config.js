@@ -27,6 +27,7 @@ export default {
       spacing: {
         'imgThumbWidth': '27.975rem',
         'imgMobileHeight': '28rem',
+        'mdImgMobileHeight': '32rem',
         'imgTextAreaSpacing': '5.4rem',
         'imgModalContainer': '28.5rem',
         'productMarginTop': '5.75rem',

@@ -99,7 +99,7 @@ export default function Product() {
     return (
         <section>
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.6, delay: 0.6}} className='relative lg:hidden lg:not-sr-only'>
-                <div className='relative w-full min-h-minImgMobileHeight sm:h-imgMobileHeight overflow-hidden'>
+                <div className='relative w-full min-h-minImgMobileHeight sm:h-imgMobileHeight md:h-mdImgMobileHeight overflow-hidden'>
                   <AnimatePresence>
                   <motion.img
                           key={page}
@@ -213,14 +213,14 @@ export default function Product() {
                                     tabIndex={thumb.index}
                                     type='button'
                                     aria-selected={page === thumb.index}
-                                    className={`rounded-xl ${page === thumb.index ? 'border-2 border-primary-Orange bg-white' : 'hover:bg-white'}`}>
+                                    className={`rounded-xl ${page === thumb.index ? 'border-2 border-primary-Orange bg-white' : ''}`}>
                                       <span id='modalImageButtonText' className='sr-only'>Press here to open the image</span>
                                         <img
                                         key={thumb.id}
                                         src={thumb.src}
                                         width={thumb.width}
                                         alt={`Thumbnail ${thumb.index + 1}`}
-                                        className={`${page === thumb.index ? 'opacity-40 rounded-md' : 'hover:opacity-90'} cursor-pointer rounded-xl`}/>
+                                        className={`${page === thumb.index ? 'opacity-40 rounded-md' : 'hover:opacity-80'} cursor-pointer rounded-xl`}/>
                                     </button>
                                 ))}
                             </motion.div>

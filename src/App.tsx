@@ -1,14 +1,17 @@
+import { useDispatch } from "react-redux"
 import Header from "./components/Header"
 import Product from "./components/Product"
 import TextArea from "./components/TextArea"
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { incrementByAmount } from "./state/product/productSlice"
 
 function App() {
+  const dispatch = useDispatch()
   const [ number, setNumber] = useState(0)
-  const [ amountOfProduct, setAmountOfProduct] = useState(0)
   const minusElement = document.getElementById('minusElement')
   const plusElement = document.getElementById('plusElement')
+
   const toUpdateNumber = (value: number) => {
     if ((number >= 0 && value > 0) || (number >= 1 && value < 0)) {
       setNumber(number + value);
@@ -16,10 +19,8 @@ function App() {
   }   
 
   const toAdd = () => {
-    if(number > 0) {
-      setAmountOfProduct(amountOfProduct + number)
-    }
-      setNumber(0)
+    dispatch(incrementByAmount(number))
+    setNumber(0)
   }
 
   if(number < 1) {
@@ -54,7 +55,7 @@ function App() {
 
   return (
     <div id="body" className="w-full min-h-screen lg:px-36 lg:box-border overflow-x-hidden lg:pb-4">
-      <Header amountOfProduct={amountOfProduct}></Header>
+      <Header></Header>
       <main id="main" className="lg:mx-productMarginLeft lg:mt-productMarginTop lg:flex lg:space-x-imgTextAreaSpacing lg:mr-12">
         <Product></Product>
         <motion.section id="text-section" initial={{x: '100vw', opacity: 0}} animate={{x: '0', opacity: 1}} transition={{duration: 0.6, delay: 1}} className="font-Kumbh p-6 lg:pt-12 lg:pl-9 lg:pr-0"> 
@@ -106,7 +107,7 @@ function App() {
               whileTap={{scale: 0.95}}
               type="button"
               className='w-full bg-primary-Orange flex items-center justify-center py-3 rounded-lg shadow-cartButton shadow-orange-300'
-              onClick={toAdd}>
+              onClick={() => toAdd()}>
                   <p className="text-white font-bold">Add to Cart</p>
               </motion.button>
           </div>
